@@ -17,13 +17,6 @@ except RuntimeError:
 # is connected to the GPIO of the Raspberry Pi.
 #GPIO.setwarnings(False)
 
-# Choose to set the GPIO numbering to BOARD or BCM
-# Uncomment to use the pin numbers on the P1 header of the board
-#GPIO.setmode(GPIO.BOARD) 
-
-# Uncomment to use the channel numbers on the Broadcom chip
-GPIO.setmode(GPIO.BCM) 
-
 class Motor:
 
 	IN1 = None
@@ -59,6 +52,12 @@ class Motor:
 	# 	setupGPIOChannels(self.channel_numbers)		
 
 	def setupGPIOChannels(self, channel_numbers):
+		# Choose to set the GPIO numbering to BOARD or BCM
+		# Uncomment line below to use the pin numbers on the P1 header of the board
+		#GPIO.setmode(GPIO.BOARD) 
+		# Default to use the channel numbers on the Broadcom chip
+		GPIO.setmode(GPIO.BCM) 
+
 		# Set up the GPIO channel's being used as output
 		# ex: GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
 		for channel in channel_numbers:
