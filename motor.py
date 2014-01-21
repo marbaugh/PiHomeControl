@@ -56,6 +56,12 @@ for channel in channel_numbers:
   # The state can be 0 / GPIO.LOW / False or 1 / GPIO.HIGH / True. 
   GPIO.output(channel, False)
 
+motor_sequence = []
+motor_sequence = range(0, 4)
+motor_sequence[0] = [1, 0, 0, 0]
+motor_sequence[1] = [0, 1, 0, 0]
+motor_sequence[2] = [0, 0, 1, 0]
+motor_sequence[3] = [0, 0, 0, 1]
 
 def stepMotor(channels, state):
 	step_num = 0
@@ -70,16 +76,12 @@ timeout = time.time() + duration   #5 seconds from now
 while True:
 	if not time.time() > timeout:
 		if forward:
-			stepMotor(channel_numbers, [1, 0, 0, 0])
-			stepMotor(channel_numbers, [0, 1, 0, 0])
-			stepMotor(channel_numbers, [0, 0, 1, 0])
-			stepMotor(channel_numbers, [0, 0, 0, 1])
+			for sequence in range(0, len(motor_sequence)):
+				stepMotor(channel_numbers, motor_sequence[sequence])
 
 		if backward:
-			stepMotor(channel_numbers, [0, 0, 0, 1])
-			stepMotor(channel_numbers, [0, 0, 1, 0])
-			stepMotor(channel_numbers, [0, 1, 0, 0])
-			stepMotor(channel_numbers, [1, 0, 0, 0])
+			for sequence in range(len(motor_sequence)-1, -1, -1):
+				stepMotor(channel_numbers, motor_sequence[sequence])
 	else:
 		break
 
