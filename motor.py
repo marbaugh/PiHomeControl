@@ -45,10 +45,11 @@ class Motor:
 		self.IN3 = IN3
 		self.IN4 = IN4
 		self.channel_numbers = [self.IN1, self.IN2, self.IN3, self.IN4]
-		self.setupGPIOChannels(self.channel_numbers)
+		self.set_GPIO_board_mode()
+		self.set_GPIO_output_channels(self.channel_numbers)
 
-	def setupGPIOChannels(self, channel_numbers):
-		"""seteupGPIOChannles takes the list of channles numbers and sets them as outputs"""
+	def set_GPIO_board_mode(self):
+		"""set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
 
 		# Choose to set the GPIO numbering to BOARD or BCM
 		# Uncomment line below to use the pin numbers on the P1 header of the board
@@ -56,6 +57,9 @@ class Motor:
 		# Default to use the channel numbers on the Broadcom chip
 		GPIO.setmode(GPIO.BCM) 
 
+	def set_GPIO_output_channels(self, channel_numbers):
+		"""set_GPIO_output_channels takes the list of channles numbers and sets them as outputs"""
+		
 		# Set up the GPIO channel's being used as output
 		# ex: GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
 		for channel in channel_numbers:
