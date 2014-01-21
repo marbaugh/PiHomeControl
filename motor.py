@@ -18,6 +18,12 @@ except RuntimeError:
 #GPIO.setwarnings(False)
 
 class Motor:
+	"""Motor class creates and instance of Motor
+
+    Provides an init function to setup the GPIO channels,
+    and other functions to step the motor forward and backward.
+
+    """
 	
 	motor_sequence = []
 	motor_sequence = range(0, 4)
@@ -27,8 +33,13 @@ class Motor:
 	motor_sequence[3] = [0, 0, 0, 1]
 	
 	def __init__(self, IN1=17, IN2=18, IN3=27, IN4=22)):
-		# Define GPIO channel numbers to be used with the stepper motor
-		# Default: Pin 11, 12, 13, 15 --> GPIO 17, 18, 27, 22
+		"""Init function sets and intializes IN1-IN4 to the corresponding GPIO channels
+
+		The init function defines GPIO channel numbers to be used with the stepper motor.
+		By default Pin 11, 12, 13, 15 are used on the Raspberry Pi and map to --> GPIO 17, 18, 27, 22
+    	but can be changed when initializing the Motor class
+    	"""
+
 		self.IN1 = IN1
 		self.IN2 = IN2
 		self.IN3 = IN3
@@ -37,6 +48,8 @@ class Motor:
 		self.setupGPIOChannels(self.channel_numbers)
 
 	def setupGPIOChannels(self, channel_numbers):
+		"""seteupGPIOChannles takes the list of channles numbers and sets them as outputs"""
+
 		# Choose to set the GPIO numbering to BOARD or BCM
 		# Uncomment line below to use the pin numbers on the P1 header of the board
 		#GPIO.setmode(GPIO.BOARD) 
@@ -53,6 +66,8 @@ class Motor:
 		  GPIO.output(channel, False)
 
 	def stepMotorForward(self, duration):
+		"""stepMotorForward takes the duration and steps through the motor sequence in a forward direction for that duration"""
+
 		timeout = time.time() + duration   #5 seconds from now
 		while True:
 			if not time.time() > timeout:
@@ -67,6 +82,8 @@ class Motor:
 				break
 
 	def stepMotorBackward(self, duration):
+		"""stepMotorBackward takes the duration and steps through the motor sequence in a backward direction for that duration"""
+
 		timeout = time.time() + duration   #5 seconds from now
 		while True:
 			if not time.time() > timeout:
@@ -81,6 +98,7 @@ class Motor:
 				break
 
 def main():
+	"""main function creates an instance of the Motor class and spins in in the given direction for the given duration"""
 
 	parser = argparse.ArgumentParser(description='Stepper Motor Program.')
 	parser.add_argument('-f', '--forward', action='store_true',
