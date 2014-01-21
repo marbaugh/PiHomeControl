@@ -24,66 +24,113 @@ except RuntimeError:
 # Uncomment to use the channel numbers on the Broadcom chip
 GPIO.setmode(GPIO.BCM) 
 
-# Define GPIO channel numbers to be used with the stepper motor
-# Pin 11, 12, 13, 15 --> GPIO 17, 18, 27, 22
-channel_numbers = [17, 18, 27, 22]
+# parser = argparse.ArgumentParser(description='Stepper Motor Program.')
+# parser.add_argument('-f', '--forward', action='store_true',
+# 	dest='forward', help='Move motor forward')
+# parser.add_argument('-b', '--backward', action='store_true',
+# 	dest='backward', help='Move motor backward')
+# parser.add_argument('-d', '--duration', action='store', 
+# 	dest='duration', type=int, help='Duration in seconds')
+# args = parser.parse_args()
 
-parser = argparse.ArgumentParser(description='Stepper Motor Program.')
-parser.add_argument('-f', '--forward', action='store_true',
-	dest='forward', help='Move motor forward')
-parser.add_argument('-b', '--backward', action='store_true',
-	dest='backward', help='Move motor backward')
-parser.add_argument('-d', '--duration', action='store', 
-	dest='duration', type=int, help='Duration in seconds')
-args = parser.parse_args()
+# if args.forward is False and args.backward is False:
+#    parser.error("At least one of -f and -b are required")
 
-if args.forward is False and args.backward is False:
-   parser.error("At least one of -f and -b are required")
+# if args.duration is None:
+# 	parser.error("Duration must be set")
 
-if args.duration is None:
-	parser.error("Duration must be set")
+# forward = args.forward
+# backward  = args.backward
+# duration = args.duration
 
-forward = args.forward
-backward  = args.backward
-duration = args.duration
+class Motor:
 
-# Set up the GPIO channel's being used as output
-# ex: GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
-for channel in channel_numbers:
-  print "Setting up channel %s as an output" %(channel)
-  GPIO.setup(channel,GPIO.OUT)
-  # Set the output state of a GPIO pin:
-  # The state can be 0 / GPIO.LOW / False or 1 / GPIO.HIGH / True. 
-  GPIO.output(channel, False)
+	IN1 = None
+	IN2 = None
+	IN3 = None
+	IN4 = None
+	channel_numbers = None
+	
+	motor_sequence = []
+	motor_sequence = range(0, 4)
+	motor_sequence[0] = [1, 0, 0, 0]
+	motor_sequence[1] = [0, 1, 0, 0]
+	motor_sequence[2] = [0, 0, 1, 0]
+	motor_sequence[3] = [0, 0, 0, 1]
+	
+	def __init__(self):
+		# Define GPIO channel numbers to be used with the stepper motor
+		# Default: Pin 11, 12, 13, 15 --> GPIO 17, 18, 27, 22
+		self.IN1 = 17
+		self.IN2 = 18
+		self.IN3 = 27
+		self.IN4 = 22
+		self.channel_numbers = [self.IN1, self.IN2, self.IN3, self.IN4]
+		self.setupGPIOChannels(self.channel_numbers)
 
-motor_sequence = []
-motor_sequence = range(0, 4)
-motor_sequence[0] = [1, 0, 0, 0]
-motor_sequence[1] = [0, 1, 0, 0]
-motor_sequence[2] = [0, 0, 1, 0]
-motor_sequence[3] = [0, 0, 0, 1]
+	# def __init__(self, IN1, IN2, IN3, IN4):
+	# 	# Define GPIO channel numbers from the board to be used with the stepper motor
+	# 	self.IN1 = IN1
+	# 	self.IN2 = IN2
+	# 	self.IN3 = IN3
+	# 	self.IN4 = IN4
+	# 	self.channel_numbers = [IN1, IN2, IN3, IN4]
+	# 	setupGPIOChannels(self.channel_numbers)		
 
-def stepMotor(channels, state):
-	step_num = 0
-	for channel in channels:
-		GPIO.output(channel, state[step_num])
-		step_num += 1
-	time.sleep(.003)
+	def setupGPIOChannels(self, channel_numbers):
+		# Set up the GPIO channel's being used as output
+		# ex: GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
+		for channel in channel_numbers:
+		  print "Setting up channel %s as an output" %(channel)
+		  GPIO.setup(channel,GPIO.OUT)
+		  # Set the output state of a GPIO pin:
+		  # The state can be 0 / GPIO.LOW / False or 1 / GPIO.HIGH / True. 
+		  GPIO.output(channel, False)
 
-print "Moving stepper motor"
-timeout = time.time() + duration   #5 seconds from now
+	def stepMotorForward(self, duration):
+		timeout = time.time() + duration   #5 seconds from now
+		while True:
+			if not time.time() > timeout:
+				step_num = 0
+				for sequence in range(0, len(self.motor_sequence)):
+					for channel in self.channel_numbers:
+						GPIO.output(channel, self.motor_sequence[sequence][step_num])
+						step_num += 1
+					step_num = 0
+					time.sleep(.003)
+			else:
+				break
 
-while True:
-	if not time.time() > timeout:
-		if forward:
-			for sequence in range(0, len(motor_sequence)):
-				stepMotor(channel_numbers, motor_sequence[sequence])
+	def stepMotorBackward(self, duration):
+		timeout = time.time() + duration   #5 seconds from now
+		while True:
+			if not time.time() > timeout:
+				step_num = 0
+				for sequence in range(len(self.motor_sequence)-1, -1, -1):
+					for channel in self.channel_numbers:
+						GPIO.output(channel, self.motor_sequence[sequence][step_num])
+						step_num += 1
+					step_num = 0
+					time.sleep(.003)
+			else:
+				break
 
-		if backward:
-			for sequence in range(len(motor_sequence)-1, -1, -1):
-				stepMotor(channel_numbers, motor_sequence[sequence])
-	else:
-		break
+def main():
+	forward = True
+	backward  = False
+	duration = 5
 
-# Returning all channels
-GPIO.cleanup()
+	motor = Motor()
+	if forward:
+		print "Moving stepper motor forward"
+		motor.stepMotorForward(duration)
+
+	elif backward:
+		print "Moving stepper bakward"
+		motor.stepMotorBackward(duration)
+
+	# Returning all channels
+	GPIO.cleanup()
+
+if __name__ == '__main__':
+	main()
