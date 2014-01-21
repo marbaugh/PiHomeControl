@@ -24,25 +24,6 @@ except RuntimeError:
 # Uncomment to use the channel numbers on the Broadcom chip
 GPIO.setmode(GPIO.BCM) 
 
-# parser = argparse.ArgumentParser(description='Stepper Motor Program.')
-# parser.add_argument('-f', '--forward', action='store_true',
-# 	dest='forward', help='Move motor forward')
-# parser.add_argument('-b', '--backward', action='store_true',
-# 	dest='backward', help='Move motor backward')
-# parser.add_argument('-d', '--duration', action='store', 
-# 	dest='duration', type=int, help='Duration in seconds')
-# args = parser.parse_args()
-
-# if args.forward is False and args.backward is False:
-#    parser.error("At least one of -f and -b are required")
-
-# if args.duration is None:
-# 	parser.error("Duration must be set")
-
-# forward = args.forward
-# backward  = args.backward
-# duration = args.duration
-
 class Motor:
 
 	IN1 = None
@@ -116,9 +97,25 @@ class Motor:
 				break
 
 def main():
-	forward = True
-	backward  = False
-	duration = 5
+
+	parser = argparse.ArgumentParser(description='Stepper Motor Program.')
+	parser.add_argument('-f', '--forward', action='store_true',
+		dest='forward', help='Move motor forward')
+	parser.add_argument('-b', '--backward', action='store_true',
+		dest='backward', help='Move motor backward')
+	parser.add_argument('-d', '--duration', action='store', 
+		dest='duration', type=int, help='Duration in seconds')
+	args = parser.parse_args()
+
+	if args.forward is False and args.backward is False:
+	   parser.error("At least one of -f and -b are required")
+
+	if args.duration is None:
+		parser.error("Duration must be set")
+
+	forward = args.forward
+	backward  = args.backward
+	duration = args.duration
 
 	motor = Motor()
 	if forward:
