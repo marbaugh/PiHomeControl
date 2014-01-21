@@ -18,12 +18,6 @@ except RuntimeError:
 #GPIO.setwarnings(False)
 
 class Motor:
-
-	IN1 = None
-	IN2 = None
-	IN3 = None
-	IN4 = None
-	channel_numbers = None
 	
 	motor_sequence = []
 	motor_sequence = range(0, 4)
