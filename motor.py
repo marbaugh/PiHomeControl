@@ -26,24 +26,15 @@ class Motor:
 	motor_sequence[2] = [0, 0, 1, 0]
 	motor_sequence[3] = [0, 0, 0, 1]
 	
-	def __init__(self):
+	def __init__(self, IN1=17, IN2=18, IN3=27, IN4=22)):
 		# Define GPIO channel numbers to be used with the stepper motor
 		# Default: Pin 11, 12, 13, 15 --> GPIO 17, 18, 27, 22
-		self.IN1 = 17
-		self.IN2 = 18
-		self.IN3 = 27
-		self.IN4 = 22
+		self.IN1 = IN1
+		self.IN2 = IN2
+		self.IN3 = IN3
+		self.IN4 = IN4
 		self.channel_numbers = [self.IN1, self.IN2, self.IN3, self.IN4]
 		self.setupGPIOChannels(self.channel_numbers)
-
-	# def __init__(self, IN1, IN2, IN3, IN4):
-	# 	# Define GPIO channel numbers from the board to be used with the stepper motor
-	# 	self.IN1 = IN1
-	# 	self.IN2 = IN2
-	# 	self.IN3 = IN3
-	# 	self.IN4 = IN4
-	# 	self.channel_numbers = [IN1, IN2, IN3, IN4]
-	# 	setupGPIOChannels(self.channel_numbers)		
 
 	def setupGPIOChannels(self, channel_numbers):
 		# Choose to set the GPIO numbering to BOARD or BCM
