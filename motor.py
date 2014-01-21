@@ -21,7 +21,7 @@ class Motor:
 	"""Motor class creates and instance of Motor
 
     Provides an init function to setup the GPIO channels,
-    and other functions to step the motor forward and backward.
+    and other functions to step the motor forward and in reverse.
 
     """
 	
@@ -65,8 +65,8 @@ class Motor:
 		  # The state can be 0 / GPIO.LOW / False or 1 / GPIO.HIGH / True. 
 		  GPIO.output(channel, False)
 
-	def stepMotorForward(self, duration):
-		"""stepMotorForward takes the duration and steps through the motor sequence in a forward direction for that duration"""
+	def forward(self, duration):
+		"""forward takes the duration and steps through the motor sequence in a forward direction for that duration"""
 
 		timeout = time.time() + duration   #5 seconds from now
 		while True:
@@ -81,8 +81,8 @@ class Motor:
 			else:
 				break
 
-	def stepMotorBackward(self, duration):
-		"""stepMotorBackward takes the duration and steps through the motor sequence in a backward direction for that duration"""
+	def reverse(self, duration):
+		"""reverse takes the duration and steps through the motor sequence in a reverse direction for that duration"""
 
 		timeout = time.time() + duration   #5 seconds from now
 		while True:
@@ -102,31 +102,31 @@ def main():
 
 	parser = argparse.ArgumentParser(description='Stepper Motor Program.')
 	parser.add_argument('-f', '--forward', action='store_true',
-		dest='forward', help='Move motor forward')
-	parser.add_argument('-b', '--backward', action='store_true',
-		dest='backward', help='Move motor backward')
+		dest='forward', help='Move motor in forward direction')
+	parser.add_argument('-r', '--reverse', action='store_true',
+		dest='reverse', help='Move motor in reverse direction')
 	parser.add_argument('-d', '--duration', action='store', 
 		dest='duration', type=int, help='Duration in seconds')
 	args = parser.parse_args()
 
-	if args.forward is False and args.backward is False:
-	   parser.error("At least one of -f and -b are required")
+	if args.forward is False and args.reverse is False:
+	   parser.error("At least one of -f and -r are required")
 
 	if args.duration is None:
 		parser.error("Duration must be set")
 
 	forward = args.forward
-	backward  = args.backward
+	reverse  = args.reverse
 	duration = args.duration
 
 	motor = Motor()
 	if forward:
 		print "Moving stepper motor forward"
-		motor.stepMotorForward(duration)
+		motor.forward(duration)
 
-	elif backward:
-		print "Moving stepper bakward"
-		motor.stepMotorBackward(duration)
+	elif reverse:
+		print "Moving stepper in reverse"
+		motor.reverse(duration)
 
 	# Returning all channels
 	GPIO.cleanup()
