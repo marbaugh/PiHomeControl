@@ -44,9 +44,9 @@ class Motor:
 		self.IN2 = IN2
 		self.IN3 = IN3
 		self.IN4 = IN4
-		self.channel_numbers = [self.IN1, self.IN2, self.IN3, self.IN4]
+		self.channels = [self.IN1, self.IN2, self.IN3, self.IN4]
 		self.set_GPIO_board_mode()
-		self.set_GPIO_output_channels(self.channel_numbers)
+		self.set_GPIO_output_channels(self.channels)
 
 	def set_GPIO_board_mode(self):
 		"""set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
@@ -57,12 +57,12 @@ class Motor:
 		# Default to use the channel numbers on the Broadcom chip
 		GPIO.setmode(GPIO.BCM) 
 
-	def set_GPIO_output_channels(self, channel_numbers):
+	def set_GPIO_output_channels(self, channels):
 		"""set_GPIO_output_channels takes the list of channles numbers and sets them as outputs"""
 		
 		# Set up the GPIO channel's being used as output
 		# ex: GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
-		for channel in channel_numbers:
+		for channel in channels:
 		  print "Setting up channel %s as an output" %(channel)
 		  GPIO.setup(channel,GPIO.OUT)
 		  # Set the output state of a GPIO pin:
@@ -77,7 +77,7 @@ class Motor:
 			if not time.time() > timeout:
 				step_num = 0
 				for sequence in range(0, len(self.motor_sequence)):
-					for channel in self.channel_numbers:
+					for channel in self.channels:
 						GPIO.output(channel, self.motor_sequence[sequence][step_num])
 						step_num += 1
 					step_num = 0
@@ -93,7 +93,7 @@ class Motor:
 			if not time.time() > timeout:
 				step_num = 0
 				for sequence in range(len(self.motor_sequence)-1, -1, -1):
-					for channel in self.channel_numbers:
+					for channel in self.channels:
 						GPIO.output(channel, self.motor_sequence[sequence][step_num])
 						step_num += 1
 					step_num = 0
