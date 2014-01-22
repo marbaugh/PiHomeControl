@@ -40,11 +40,7 @@ class Motor:
     	but can be changed when initializing the Motor class
     	"""
 
-		self.IN1 = IN1
-		self.IN2 = IN2
-		self.IN3 = IN3
-		self.IN4 = IN4
-		self.channels = [self.IN1, self.IN2, self.IN3, self.IN4]
+		self.channels = [IN1, IN2, IN3, IN4]
 		self.set_GPIO_board_mode()
 		self.set_GPIO_output_channels(self.channels)
 
