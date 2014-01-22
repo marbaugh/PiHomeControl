@@ -24,29 +24,29 @@ class Motor:
     and other functions to step the motor forward and in reverse.
 
     """
-    
+
 	motor_sequence = ((1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))
 
-	def __init__(self, IN1=17, IN2=18, IN3=27, IN4=22):
+	def __init__(self, IN1=17, IN2=18, IN3=27, IN4=22, mode=GPIO.BCM):
 		"""Init function sets and intializes IN1-IN4 to the corresponding GPIO channels
 
 		The init function defines GPIO channel numbers to be used with the stepper motor.
 		By default Pin 11, 12, 13, 15 are used on the Raspberry Pi and map to --> GPIO 17, 18, 27, 22
-    	but can be changed when initializing the Motor class
+    	but can be changed when initializing the Motor class.
+
+    	The default board mode is to use the channel numbers on the Broadcom chip (GPIO.BCM)
+		
     	"""
 
 		self.channels = [IN1, IN2, IN3, IN4]
-		self.set_GPIO_board_mode()
+		self.set_GPIO_board_mode(mode)
 		self.set_GPIO_output_channels(self.channels)
 
-	def set_GPIO_board_mode(self):
+	def set_GPIO_board_mode(self, mode):
 		"""set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
 
-		# Choose to set the GPIO numbering to BOARD or BCM
-		# Uncomment line below to use the pin numbers on the P1 header of the board
-		#GPIO.setmode(GPIO.BOARD) 
-		# Default to use the channel numbers on the Broadcom chip
-		GPIO.setmode(GPIO.BCM) 
+		#GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
+		GPIO.setmode(mode) 
 
 	def set_GPIO_output_channels(self, channels):
 		"""set_GPIO_output_channels takes the list of channles numbers and sets them as outputs"""
