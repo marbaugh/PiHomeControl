@@ -12,7 +12,7 @@ try:
 except RuntimeError:
     print("Error importing RPi.GPI!\n")
     print("Possible you need to run script with 'sudo'")
-    
+
 # Avoid warnings if more than one script/circuit
 # is connected to the GPIO of the Raspberry Pi.
 #GPIO.setwarnings(False)
@@ -35,7 +35,6 @@ class Motor:
         but can be changed when initializing the Motor class.
 
         The default board mode is to use the channel numbers on the Broadcom chip (GPIO.BCM)
-        
         """
 
         self.channels = [IN1, IN2, IN3, IN4]
@@ -46,18 +45,17 @@ class Motor:
         """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
 
         #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
-        GPIO.setmode(mode) 
+        GPIO.setmode(mode)
 
     def set_GPIO_output_channels(self, channels):
         """set_GPIO_output_channels takes the list of channles numbers and sets them as outputs"""
-        
         # Set up the GPIO channel's being used as output
         # ex: GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
         for channel in channels:
           print "Setting up channel %s as an output" %(channel)
           GPIO.setup(channel,GPIO.OUT)
           # Set the output state of a GPIO pin:
-          # The state can be 0 / GPIO.LOW / False or 1 / GPIO.HIGH / True. 
+          # The state can be 0 / GPIO.LOW / False or 1 / GPIO.HIGH / True.
           GPIO.output(channel, False)
 
     def forward(self, duration):
@@ -100,7 +98,7 @@ def main():
         dest='forward', help='Move motor in forward direction')
     parser.add_argument('-r', '--reverse', action='store_true',
         dest='reverse', help='Move motor in reverse direction')
-    parser.add_argument('-d', '--duration', action='store', 
+    parser.add_argument('-d', '--duration', action='store',
         dest='duration', type=int, help='Duration in seconds')
     args = parser.parse_args()
 
