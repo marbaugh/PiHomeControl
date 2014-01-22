@@ -24,14 +24,9 @@ class Motor:
     and other functions to step the motor forward and in reverse.
 
     """
-	
-	motor_sequence = []
-	motor_sequence = range(0, 4)
-	motor_sequence[0] = [1, 0, 0, 0]
-	motor_sequence[1] = [0, 1, 0, 0]
-	motor_sequence[2] = [0, 0, 1, 0]
-	motor_sequence[3] = [0, 0, 0, 1]
-	
+    
+	motor_sequence = ((1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))
+
 	def __init__(self, IN1=17, IN2=18, IN3=27, IN4=22):
 		"""Init function sets and intializes IN1-IN4 to the corresponding GPIO channels
 
