@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='homeautomation',
       version='1.0',
@@ -10,5 +10,5 @@ setup(name='homeautomation',
       url='https://github.com/marbaugh/stepperMotor',
       package_dir = {'': 'src'},
       packages=['homeautomation'],
-      install_requires=[ 'RPi.GPIO'],
+      install_requires=['RPi.GPIO'],
      )

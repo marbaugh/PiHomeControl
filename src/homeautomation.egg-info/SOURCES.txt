@@ -1,0 +1,9 @@
+README.txt
+setup.py
+src/homeautomation/__init__.py
+src/homeautomation/motor.py
+src/homeautomation.egg-info/PKG-INFO
+src/homeautomation.egg-info/SOURCES.txt
+src/homeautomation.egg-info/dependency_links.txt
+src/homeautomation.egg-info/requires.txt
+src/homeautomation.egg-info/top_level.txt
