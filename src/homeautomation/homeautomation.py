@@ -90,39 +90,105 @@ class Motor:
             else:
                 break
 
-def main():
-    """main function creates an instance of the Motor class and spins in in the given direction for the given duration"""
+class MotionSensor:
+    """MotorSensor class creates and instance of MotionSensor
 
-    parser = argparse.ArgumentParser(description='Stepper Motor Program.')
-    parser.add_argument('-f', '--forward', action='store_true',
-        dest='forward', help='Move motor in forward direction')
-    parser.add_argument('-r', '--reverse', action='store_true',
-        dest='reverse', help='Move motor in reverse direction')
-    parser.add_argument('-d', '--duration', action='store',
-        dest='duration', type=int, help='Duration in seconds')
-    args = parser.parse_args()
+    Provides an init function to setup the GPIO channel,
+    and a function to detect is there is motion
 
-    if args.forward is False and args.reverse is False:
-       parser.error("At least one of -f and -r are required")
+    """
 
-    if args.duration is None:
-        parser.error("Duration must be set")
+    def __init__(self, CHANNEL=25, mode=GPIO.BCM):
+        """Init function sets and intializes the channel to the corresponding GPIO channels
 
-    forward = args.forward
-    reverse  = args.reverse
-    duration = args.duration
+        The init function defines GPIO channel number to be used with the motion sensor.
+        By default Pin 22 is used on the Raspberry Pi and map to --> GPIO 25
+        but can be changed when initializing the MotionSensor class.
 
-    motor = Motor()
-    if forward:
-        print "Moving stepper motor forward"
-        motor.forward(duration)
+        The default board mode is to use the channel numbers on the Broadcom chip (GPIO.BCM)
+        """
 
-    elif reverse:
-        print "Moving stepper in reverse"
-        motor.reverse(duration)
+        self.channels = [CHANNEL]
+        self.set_GPIO_board_mode(mode)
+        self.set_GPIO_output_channels(self.channels)
 
-    # Returning all channels
-    GPIO.cleanup()
+    def set_GPIO_board_mode(self, mode):
+        """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
 
-if __name__ == '__main__':
-    main()
+        #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(mode)
+
+    def set_GPIO_input_channels(self, channels):
+        """set_GPIO_input_channels takes the list of channles numbers and sets them as inputs"""
+        # Set up the GPIO channel's being used as input
+        # ex: GPIO.setup(channel, GPIO.IN, initial=GPIO.HIGH)
+        for channel in channels:
+          print "Setting up channel %s as an input" %(channel)
+          GPIO.setup(channel,GPIO.IN,pull_up_down=GPIO.PUD.UP)
+
+    def status(self):
+        """status returns TRUE if the sensor is activate and FALSE otherwise"""
+
+        motion = False
+        for channel in self.channels:
+            timeout = time.time() + 5 #5 seconds from now
+            while True:
+                if GPIO.input(channel)
+                    motion = True
+                if time.time() > timeout:
+                    break
+
+        return motion
+
+
+
+class DoorSensor:
+    """DoorSensor class creates and instance of DoorSensor
+
+    Provides an init function to setup the GPIO channel,
+    and a function to detect if the door is open
+
+    """
+
+    def __init__(self, CHANNEL=23, mode=GPIO.BCM):
+        """Init function sets and intializes the channel to the corresponding GPIO channels
+
+        The init function defines GPIO channel number to be used with the door sensor.
+        By default Pin 16 is used on the Raspberry Pi and map to --> GPIO 23
+        but can be changed when initializing the DoorSensor class.
+
+        The default board mode is to use the channel numbers on the Broadcom chip (GPIO.BCM)
+        """
+
+        self.channels = [CHANNEL]
+        self.set_GPIO_board_mode(mode)
+        self.set_GPIO_output_channels(self.channels)
+
+    def set_GPIO_board_mode(self, mode):
+        """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
+
+        #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(mode)
+
+    def set_GPIO_input_channels(self, channels):
+        """set_GPIO_input_channels takes the list of channles numbers and sets them as inputs"""
+        # Set up the GPIO channel's being used as input
+        # ex: GPIO.setup(channel, GPIO.IN, initial=GPIO.HIGH)
+        for channel in channels:
+          print "Setting up channel %s as an input" %(channel)
+          GPIO.setup(channel,GPIO.IN,pull_up_down=GPIO.PUD.UP)
+
+    def status(self):
+        """status returns TRUE if the door is open and FALSE otherwise"""
+
+        door = False
+        for channel in self.channels:
+            timeout = time.time() + 5 #5 seconds from now
+            while True:
+                if GPIO.input(channel)
+                    door = True
+                if time.time() > timeout:
+                    break
+
+        return door
+
