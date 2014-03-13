@@ -17,7 +17,7 @@ except RuntimeError:
 # is connected to the GPIO of the Raspberry Pi.
 #GPIO.setwarnings(False)
 
-class Motor(object):
+class Motor(Accessory):
     """Motor class creates and instance of Motor
 
     Provides an init function to setup the GPIO channels,
@@ -40,12 +40,6 @@ class Motor(object):
         self.channels = [IN1, IN2, IN3, IN4]
         self.set_GPIO_board_mode(mode)
         self.set_GPIO_output_channels(self.channels)
-
-    def set_GPIO_board_mode(self, mode):
-        """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
-
-        #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
-        GPIO.setmode(mode)
 
     def set_GPIO_output_channels(self, channels):
         """set_GPIO_output_channels takes the list of channles numbers and sets them as outputs"""
@@ -89,11 +83,8 @@ class Motor(object):
                     time.sleep(.003)
             else:
                 break
-    def cleanup(self):
-        """reutrns all the channels used"""
-        GPIO.cleanup()
 
-class MotionSensor(object):
+class MotionSensor(Accessory):
     """MotorSensor class creates and instance of MotionSensor
 
     Provides an init function to setup the GPIO channel,
@@ -114,12 +105,6 @@ class MotionSensor(object):
         self.channels = [CHANNEL]
         self.set_GPIO_board_mode(mode)
         self.set_GPIO_output_channels(self.channels)
-
-    def set_GPIO_board_mode(self, mode):
-        """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
-
-        #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
-        GPIO.setmode(mode)
 
     def set_GPIO_input_channels(self, channels):
         """set_GPIO_input_channels takes the list of channles numbers and sets them as inputs"""
@@ -143,11 +128,7 @@ class MotionSensor(object):
 
         return motion
 
-    def cleanup(self):
-        """reutrns all the channels used"""
-        GPIO.cleanup()
-
-class DoorSensor(object):
+class DoorSensor(Accessory):
     """DoorSensor class creates and instance of DoorSensor
 
     Provides an init function to setup the GPIO channel,
@@ -168,12 +149,6 @@ class DoorSensor(object):
         self.channels = [CHANNEL]
         self.set_GPIO_board_mode(mode)
         self.set_GPIO_output_channels(self.channels)
-
-    def set_GPIO_board_mode(self, mode):
-        """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
-
-        #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
-        GPIO.setmode(mode)
 
     def set_GPIO_input_channels(self, channels):
         """set_GPIO_input_channels takes the list of channles numbers and sets them as inputs"""
@@ -197,7 +172,16 @@ class DoorSensor(object):
 
         return door
 
+class Accessory(object):
+
+    def set_GPIO_board_mode(self, mode):
+        """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
+        
+        #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(mode)
+
     def cleanup(self):
         """reutrns all the channels used"""
         GPIO.cleanup()
+
 
