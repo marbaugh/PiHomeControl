@@ -187,7 +187,7 @@ class DoorSensor(object):
             while True:
                 if GPIO.input(channel)
                     door = True
-                if time.time() > timeout:
+                if t ime.time() > timeout:
                     break
 
         return door
