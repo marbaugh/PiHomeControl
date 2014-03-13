@@ -89,6 +89,9 @@ class Motor(object):
                     time.sleep(.003)
             else:
                 break
+    def cleanup(self):
+        """reutrns all the channels used"""
+        GPIO.cleanup()
 
 class MotionSensor(object):
     """MotorSensor class creates and instance of MotionSensor
@@ -140,7 +143,9 @@ class MotionSensor(object):
 
         return motion
 
-
+    def cleanup(self):
+        """reutrns all the channels used"""
+        GPIO.cleanup()
 
 class DoorSensor(object):
     """DoorSensor class creates and instance of DoorSensor
@@ -191,4 +196,8 @@ class DoorSensor(object):
                     break
 
         return door
+
+    def cleanup(self):
+        """reutrns all the channels used"""
+        GPIO.cleanup()
 
