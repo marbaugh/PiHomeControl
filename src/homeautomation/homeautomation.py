@@ -17,7 +17,7 @@ except RuntimeError:
 # is connected to the GPIO of the Raspberry Pi.
 #GPIO.setwarnings(False)
 
-class Motor:
+class Motor(object):
     """Motor class creates and instance of Motor
 
     Provides an init function to setup the GPIO channels,
@@ -90,7 +90,7 @@ class Motor:
             else:
                 break
 
-class MotionSensor:
+class MotionSensor(object):
     """MotorSensor class creates and instance of MotionSensor
 
     Provides an init function to setup the GPIO channel,
@@ -142,7 +142,7 @@ class MotionSensor:
 
 
 
-class DoorSensor:
+class DoorSensor(object):
     """DoorSensor class creates and instance of DoorSensor
 
     Provides an init function to setup the GPIO channel,
