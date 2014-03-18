@@ -17,6 +17,18 @@ except RuntimeError:
 # is connected to the GPIO of the Raspberry Pi.
 #GPIO.setwarnings(False)
 
+class Accessory(object):
+
+    def set_GPIO_board_mode(self, mode):
+        """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
+        
+        #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(mode)
+
+    def cleanup(self):
+        """reutrns all the channels used"""
+        GPIO.cleanup()
+
 class Motor(Accessory):
     """Motor class creates and instance of Motor
 
@@ -165,23 +177,11 @@ class DoorSensor(Accessory):
         for channel in self.channels:
             timeout = time.time() + 5 #5 seconds from now
             while True:
-                if GPIO.input(channel)
+                if GPIO.input(channel):
                     door = True
-                if t ime.time() > timeout:
+                if time.time() > timeout:
                     break
 
         return door
-
-class Accessory(object):
-
-    def set_GPIO_board_mode(self, mode):
-        """set_GPIO_board_mode set the GPIO board numbering to BOARD or BCM"""
-        
-        #GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
-        GPIO.setmode(mode)
-
-    def cleanup(self):
-        """reutrns all the channels used"""
-        GPIO.cleanup()
 
 
