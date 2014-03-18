@@ -5,13 +5,8 @@ import argparse
 import time
 import signal
 import sys
-
-try:
-    # Class to control the GPIO on a Raspberry Pi
-    import RPi.GPIO as GPIO
-except RuntimeError:
-    print("Error importing RPi.GPI!\n")
-    print("Possible you need to run script with 'sudo'")
+# Class to control the GPIO on a Raspberry Pi
+import RPi.GPIO as GPIO
 
 # Avoid warnings if more than one script/circuit
 # is connected to the GPIO of the Raspberry Pi.
