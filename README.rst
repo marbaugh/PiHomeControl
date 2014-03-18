@@ -8,5 +8,10 @@ Classes
 -------
 
 1. Motor
-2. DoorSensor
-3. MotionSensor
+  Can be used to control stepper motors connected to the Raspberry Pi
+2. MotionSensor
+  Can be used to monitor motion sensors connected to the Raspberry Pi
+3. DoorSensor
+  Can be used to monitor door sensors connected to the Raspberry Pi
+4. Accessory
+  Common methods used by the GPIO pins are stored in the Accessory Class
