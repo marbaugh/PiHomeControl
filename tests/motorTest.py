@@ -1,10 +1,10 @@
 from homecontrol.automation import Motor
 
-def motor_forward_test(self, motor):
+def motor_forward_test(motor):
 	print "Moving stepper motor forward"
 	motor.forward(5)
 
-def motor_reverse_test(self, motor):
+def motor_reverse_test(motor):
 	print "Moving stepper in reverse"
 	motor.reverse(5)
 
