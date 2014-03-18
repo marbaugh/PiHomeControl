@@ -1,4 +1,4 @@
-from homeautomation.homeautomation import Motor
+from homecontrol.automation import Motor
 
 def motor_forward_test():
 	motor = Motor()
