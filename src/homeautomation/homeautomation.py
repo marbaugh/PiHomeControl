@@ -39,17 +39,20 @@ class Motor(Accessory):
 
     motor_sequence = ((1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))
 
-    def __init__(self, IN1=17, IN2=18, IN3=27, IN4=22, mode=GPIO.BCM):
+    def __init__(self, IN1=17, IN2=18, IN3=27, IN4=22, speed=.003, mode=GPIO.BCM):
         """Init function sets and intializes IN1-IN4 to the corresponding GPIO channels
 
         The init function defines GPIO channel numbers to be used with the stepper motor.
         By default Pin 11, 12, 13, 15 are used on the Raspberry Pi and map to --> GPIO 17, 18, 27, 22
         but can be changed when initializing the Motor class.
 
+        The default speed is set to .003 for the time the motor sleeps in-between each sequence 
+
         The default board mode is to use the channel numbers on the Broadcom chip (GPIO.BCM)
         """
 
         self.channels = [IN1, IN2, IN3, IN4]
+        self.speed = speed
         self.set_GPIO_board_mode(mode)
         self.set_GPIO_output_channels(self.channels)
 
@@ -76,7 +79,7 @@ class Motor(Accessory):
                         GPIO.output(channel, Motor.motor_sequence[sequence][step_num])
                         step_num += 1
                     step_num = 0
-                    time.sleep(.003)
+                    time.sleep(self.speed)
             else:
                 break
 
@@ -92,7 +95,7 @@ class Motor(Accessory):
                         GPIO.output(channel, Motor.motor_sequence[sequence][step_num])
                         step_num += 1
                     step_num = 0
-                    time.sleep(.003)
+                    time.sleep(self.speed)
             else:
                 break
 
