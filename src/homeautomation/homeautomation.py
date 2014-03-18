@@ -51,16 +51,16 @@ class Motor(Accessory):
         The default board mode is to use the channel numbers on the Broadcom chip (GPIO.BCM)
         """
 
-        self.channels = [IN1, IN2, IN3, IN4]
-        self.speed = speed
+        self._channels = [IN1, IN2, IN3, IN4]
+        self._speed = speed
         self.set_GPIO_board_mode(mode)
-        self.set_GPIO_output_channels(self.channels)
+        self.set_GPIO_output_channels()
 
-    def set_GPIO_output_channels(self, channels):
+    def set_GPIO_output_channels(self):
         """set_GPIO_output_channels takes the list of channles numbers and sets them as outputs"""
         # Set up the GPIO channel's being used as output
         # ex: GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
-        for channel in channels:
+        for channel in self._channels:
           print "Setting up channel %s as an output" %(channel)
           GPIO.setup(channel,GPIO.OUT)
           # Set the output state of a GPIO pin:
@@ -75,11 +75,11 @@ class Motor(Accessory):
             if not time.time() > timeout:
                 step_num = 0
                 for sequence in range(0, len(Motor.motor_sequence)):
-                    for channel in self.channels:
+                    for channel in self._channels:
                         GPIO.output(channel, Motor.motor_sequence[sequence][step_num])
                         step_num += 1
                     step_num = 0
-                    time.sleep(self.speed)
+                    time.sleep(self._speed)
             else:
                 break
 
@@ -91,11 +91,11 @@ class Motor(Accessory):
             if not time.time() > timeout:
                 step_num = 0
                 for sequence in range(len(Motor.motor_sequence)-1, -1, -1):
-                    for channel in self.channels:
+                    for channel in self._channels:
                         GPIO.output(channel, Motor.motor_sequence[sequence][step_num])
                         step_num += 1
                     step_num = 0
-                    time.sleep(self.speed)
+                    time.sleep(self._speed)
             else:
                 break
 
