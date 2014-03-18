@@ -1,24 +1,20 @@
 from nose.tools import *
 from homecontrol.automation import Motor
+import unittest
 
-def setup_func():
-	motor = Motor()
 
-def teardown_func():
-	motor.cleanup()
+class MotorTest(unittest.TestCase):
 
-@with_setup(setup_func, teardown_func)
-def test_motor_forward():
-	motor = Motor()
-	print "Moving stepper motor forward"
-	motor.forward(5)
-	motor.cleanup()
-	pass
+	def setUp(self):
+		self.motor = Motor()
 
-@with_setup(setup_func, teardown_func)
-def test_motor_reverse():
-	motor = Motor()
-	print "Moving stepper in reverse"
-	motor.reverse(5)
-	motor.cleanup()
-	pass
+	def tearDown(self):
+		self.motor.cleanup()
+
+	def test_motor_forward(self):
+		print "Moving stepper motor forward"
+		self.motor.forward(5)
+
+	def test_motor_reverse():
+		print "Moving stepper in reverse"
+		self.motor.reverse(5)
