@@ -1,1 +1,11 @@
 dist/
+
+src/homecontrol.egg-info/PKG-INFO
+
+src/homecontrol.egg-info/SOURCES.txt
+
+src/homecontrol.egg-info/dependency_links.txt
+
+src/homecontrol.egg-info/requires.txt
+
+src/homecontrol.egg-info/top_level.txt
