@@ -121,7 +121,7 @@ class MotionSensor(Accessory):
         for channel in self.channels:
             timeout = time.time() + 5 #5 seconds from now
             while True:
-                if GPIO.input(channel)
+                if GPIO.input(channel):
                     motion = True
                 if time.time() > timeout:
                     break
