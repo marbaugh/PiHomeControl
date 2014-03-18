@@ -15,6 +15,6 @@ class MotorTest(unittest.TestCase):
 		print "Moving stepper motor forward"
 		self.motor.forward(5)
 
-	def test_motor_reverse():
+	def test_motor_reverse(self):
 		print "Moving stepper in reverse"
 		self.motor.reverse(5)
