@@ -2,7 +2,6 @@ from nose.tools import *
 from homecontrol.automation import Motor
 import unittest
 
-
 class MotorTest(unittest.TestCase):
 
 	def setUp(self):
