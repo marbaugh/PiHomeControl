@@ -9,7 +9,7 @@ def motor_reverse_test(self, motor):
 	motor.reverse(5)
 
 def main():
-    motor = Motor()
+	motor = Motor()
 	motor_forward_test(motor)
 	motor_reverse_test(motor)
 
