@@ -12,6 +12,9 @@ import RPi.GPIO as GPIO
 # is connected to the GPIO of the Raspberry Pi.
 #GPIO.setwarnings(False)
 
+class AlarmException(Exception):
+    pass
+
 class Accessory(object):
 
     def set_GPIO_board_mode(self, mode):
@@ -23,6 +26,9 @@ class Accessory(object):
     def cleanup(self):
         """reutrns all the channels used"""
         GPIO.cleanup()
+    
+    def alarmHandler(signum, frame):
+        raise AlarmException
 
 class Motor(Accessory):
     """Motor class creates and instance of Motor
@@ -78,19 +84,17 @@ class Motor(Accessory):
         """forward takes the duration and steps through the motor sequence 
         in a forward direction for that duration"""
 
-        timeout = time.time() + duration   #5 seconds from now
+        signal.signal(signal.SIGALRM, alarmHandler)
+        signal.alarm(duration)
         while True:
-            if not time.time() > timeout:
+            step_num = 0
+            for sequence in range(0, len(Motor.motor_sequence)):
+                for channel in self._channels:
+                    GPIO.output(channel,
+                                Motor.motor_sequence[sequence][step_num])
+                    step_num += 1
                 step_num = 0
-                for sequence in range(0, len(Motor.motor_sequence)):
-                    for channel in self._channels:
-                        GPIO.output(channel,
-                                    Motor.motor_sequence[sequence][step_num])
-                        step_num += 1
-                    step_num = 0
-                    time.sleep(self._speed)
-            else:
-                break
+                time.sleep(self._speed)
 
     def reverse(self, duration):
         """reverse takes the duration and steps through the motor sequence 
