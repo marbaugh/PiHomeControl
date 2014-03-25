@@ -36,5 +36,5 @@ Limitations
 Currently only supports:
 
 1. Stepper motors connected to the Raspberry Pi
-2. Monitor motion sensors connected to the Raspberry Pi
+2. Motion sensors connected to the Raspberry Pi
 3. Door sensors connected to the Raspberry Pi
