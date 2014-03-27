@@ -3,7 +3,6 @@
 # Import the required libraries
 import argparse
 import time
-import signal
 import sys
 # Class to control the GPIO on a Raspberry Pi
 import RPi.GPIO as GPIO
@@ -11,9 +10,6 @@ import RPi.GPIO as GPIO
 # Avoid warnings if more than one script/circuit
 # is connected to the GPIO of the Raspberry Pi.
 #GPIO.setwarnings(False)
-
-class AlarmException(Exception):
-    pass
 
 class Accessory(object):
 
@@ -27,9 +23,6 @@ class Accessory(object):
         """reutrns all the channels used"""
         GPIO.cleanup()
     
-    def alarmHandler(signum, frame):
-        raise AlarmException
-
 class Motor(Accessory):
     """Motor class creates and instance of Motor
 
@@ -83,10 +76,9 @@ class Motor(Accessory):
     def forward(self, duration):
         """forward takes the duration and steps through the motor sequence 
         in a forward direction for that duration"""
-
-        signal.signal(signal.SIGALRM, alarmHandler)
-        signal.alarm(duration)
-        while True:
+        
+        timeout = time.time() + duration
+        while time.time() < timeout:
             step_num = 0
             for sequence in range(0, len(Motor.motor_sequence)):
                 for channel in self._channels:
@@ -100,20 +92,17 @@ class Motor(Accessory):
         """reverse takes the duration and steps through the motor sequence 
         in a reverse direction for that duration"""
 
-        timeout = time.time() + duration   #5 seconds from now
-        while True:
-            if not time.time() > timeout:
+        timeout = time.time() + duration
+        while time.time() < timeout:
+            step_num = 0
+            for sequence in range(len(Motor.motor_sequence)-1, -1, -1):
+                for channel in self._channels:
+                    GPIO.output(channel,
+                                Motor.motor_sequence[sequence][step_num])
+                    step_num += 1
                 step_num = 0
-                for sequence in range(len(Motor.motor_sequence)-1, -1, -1):
-                    for channel in self._channels:
-                        GPIO.output(channel,
-                                    Motor.motor_sequence[sequence][step_num])
-                        step_num += 1
-                    step_num = 0
-                    time.sleep(self._speed)
-            else:
-                break
-
+                time.sleep(self._speed)
+            
 class MotionSensor(Accessory):
     """MotorSensor class creates and instance of MotionSensor
 
@@ -155,12 +144,10 @@ class MotionSensor(Accessory):
         motion = False
         for channel in self.channels:
             timeout = time.time() + 5 #5 seconds from now
-            while True:
+            while time.time() < timeout:
                 if GPIO.input(channel):
                     motion = True
-                if time.time() > timeout:
-                    break
-
+                
         return motion
 
 class DoorSensor(Accessory):
@@ -204,10 +191,8 @@ class DoorSensor(Accessory):
         door = False
         for channel in self.channels:
             timeout = time.time() + 5 #5 seconds from now
-            while True:
+            while time.time() < timeout:
                 if GPIO.input(channel):
                     door = True
-                if time.time() > timeout:
-                    break
-
+                
         return door
