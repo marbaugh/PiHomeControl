@@ -2,7 +2,7 @@ from nose.tools import *
 from homecontrol.automation import MotionSensor
 import unittest
 
-class MotionTest(unittest.TestCase):
+class MotionSensorTest(unittest.TestCase):
 
 	def setUp(self):
 		self.motion_sensor = MotionSensor()
