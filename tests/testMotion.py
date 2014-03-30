@@ -12,8 +12,8 @@ class MotionTest(unittest.TestCase):
 
 	def test_motion_status_true(self):
 		print "Checking Status of Motion Sensor"
-		self.assertTrue(self.motor.status())
+		self.assertTrue(self.motion_sensor.status())
 
 	def test_motion_status_false(self):
 		print "Checking Status of Motion Sensor"
-		self.assertFalse(self.motor.status())
+		self.assertFalse(self.motion_sensor.status())
