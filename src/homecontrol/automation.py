@@ -135,7 +135,7 @@ class MotionSensor(Accessory):
         # ex: GPIO.setup(channel, GPIO.IN, initial=GPIO.HIGH)
         for channel in channels:
           print "Setting up channel %s as an input" %(channel)
-          GPIO.setup(channel,GPIO.IN,pull_up_down=GPIO.PUD.UP)
+          GPIO.setup(channel,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 
     def status(self):
         """status returns TRUE if the sensor is activate and 
@@ -183,7 +183,7 @@ class DoorSensor(Accessory):
         # ex: GPIO.setup(channel, GPIO.IN, initial=GPIO.HIGH)
         for channel in channels:
           print "Setting up channel %s as an input" %(channel)
-          GPIO.setup(channel,GPIO.IN,pull_up_down=GPIO.PUD.UP)
+          GPIO.setup(channel,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 
     def status(self):
         """status returns TRUE if the door is open and FALSE otherwise"""
