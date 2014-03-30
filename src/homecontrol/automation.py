@@ -126,7 +126,7 @@ class MotionSensor(Accessory):
 
         self.channels = [CHANNEL]
         self.set_GPIO_board_mode(mode)
-        self.set_GPIO_output_channels(self.channels)
+        self.set_GPIO_input_channels(self.channels)
 
     def set_GPIO_input_channels(self, channels):
         """set_GPIO_input_channels takes the list of channles numbers and 
@@ -174,7 +174,7 @@ class DoorSensor(Accessory):
 
         self.channels = [CHANNEL]
         self.set_GPIO_board_mode(mode)
-        self.set_GPIO_output_channels(self.channels)
+        self.set_GPIO_input_channels(self.channels)
 
     def set_GPIO_input_channels(self, channels):
         """set_GPIO_input_channels takes the list of channles numbers and 
