@@ -10,10 +10,6 @@ class MotionTest(unittest.TestCase):
 	def tearDown(self):
 		self.motion_sensor.cleanup()
 
-	def test_motion_status_true(self):
+	def test_motion_status(self):
 		print "Checking Status of Motion Sensor"
-		self.assertTrue(self.motion_sensor.status())
-
-	def test_motion_status_false(self):
-		print "Checking Status of Motion Sensor"
-		self.assertFalse(self.motion_sensor.status())
+		self.motion_sensor.status()
