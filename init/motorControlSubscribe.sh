@@ -11,7 +11,7 @@
 ### END INIT INFO
  
 # Change the next 3 lines to suit where you install your script and what you want to call it
-DIR=/usr/local/bin/PiHomeControl
+DIR=/usr/local/bin
 DAEMON=$DIR/motorControlSub.py
 DAEMON_NAME=motorControlSub 
  
