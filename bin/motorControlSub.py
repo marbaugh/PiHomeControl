@@ -10,7 +10,7 @@ socket = context.socket(zmq.SUB)
 def sub_motion_sensor_status():
 print "Collecting updates from weather server..."
 socket.connect ("tcp://localhost:%s" % port)
-topicfilter = "10002"
+topicfilter = "motor"
 while True:
 socket.setsockopt(zmq.SUBSCRIBE, topicfilter)
 string = socket.recv()
