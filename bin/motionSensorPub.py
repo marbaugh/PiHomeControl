@@ -1,4 +1,3 @@
-
 from homecontrol.automation import MotionSensor
 import sys
 import time
@@ -6,7 +5,7 @@ import zmq
 
 def pub_motion_sensor_status():
 	port = "5556"
-	topic = 10000
+	topic = "motion"
 	context = zmq.Context()
 	socket = context.socket(zmq.PUB)
 	socket.bind("tcp://*:%s" % port)
