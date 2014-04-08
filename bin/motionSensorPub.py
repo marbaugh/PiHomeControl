@@ -17,4 +17,4 @@ def pub_motion_sensor_status():
 		time.sleep(10)
 
 if __name__ == "__main__":
-            pub_motion_sensor_status()
+	pub_motion_sensor_status()

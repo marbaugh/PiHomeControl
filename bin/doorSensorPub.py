@@ -17,4 +17,4 @@ def pub_door_sensor_status():
 		time.sleep(10)
 
 if __name__ == "__main__":
-            pub_door_sensor_status()
+	pub_door_sensor_status()
