@@ -1,4 +1,3 @@
-
 from homecontrol.automation import DoorSensor
 import sys
 import time
@@ -6,7 +5,7 @@ import zmq
 
 def pub_door_sensor_status():
 	port = "5556"
-	topic = 10001
+	topic = "door"
 	context = zmq.Context()
 	socket = context.socket(zmq.PUB)
 	socket.bind("tcp://*:%s" % port)
