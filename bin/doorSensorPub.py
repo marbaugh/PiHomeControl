@@ -10,7 +10,7 @@ def pub_door_sensor_status():
     topic = "door"
     context = zmq.Context()
     socket = context.socket(zmq.PUB)
-    socket.bind("tcp://*:%s" % port)
+    socket.bind("tcp://*:{0}".format(port))
     # Allow clients to connect before sending data
     sleep(10)
     while True:
