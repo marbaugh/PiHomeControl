@@ -10,7 +10,7 @@ context = zmq.Context()
 socket = context.socket(zmq.SUB)
 
 def sub_motor_control():
-	print "Checking status of motion sensor"
+	print "Listening for motor control messages"
 	socket.connect ("tcp://localhost:%s" % port)
 	topicfilter = "motor"
 	while True:
