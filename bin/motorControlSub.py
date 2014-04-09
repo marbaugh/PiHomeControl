@@ -11,7 +11,7 @@ socket = context.socket(zmq.SUB)
 
 def sub_motor_control():
 	print "Listening for motor control messages"
-	socket.connect ("tcp://localhost:%s" % port)
+	socket.connect ("tcp://localhost:{0}".format(port))
 	topicfilter = "motor"
 	while True:
 		socket.setsockopt(zmq.SUBSCRIBE, topicfilter)
