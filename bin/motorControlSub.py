@@ -13,11 +13,13 @@ def sub_motor_control():
 	print "Listening for motor control messages"
 	socket.connect ("tcp://localhost:{0}".format(port))
 	topicfilter = "motor"
+	motor = Motor()
 	while True:
 		socket.setsockopt(zmq.SUBSCRIBE, topicfilter)
 		string = socket.recv()
 		topic, messagedata = string.split()
 		print topic, messagedata
+                motor.forward(5)
 
 if __name__ == "__main__":
-	sub_motor_control)
+	sub_motor_control()
