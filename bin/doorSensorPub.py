@@ -8,6 +8,11 @@ import requests
 def DOOR(self):
      print "Door Movement Detected!"
      print DoorSensor().status()
+     url = webserver+"/doorSensor/status/"
+     if messagedata == True:
+     	r = requests.post(url+"opened")
+     else:
+     	r = requests.post(url+"closed")
 
 
 def pub_door_sensor_status():
