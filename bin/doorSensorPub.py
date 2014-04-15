@@ -7,7 +7,7 @@ import time
 
 def DOOR(self):
      messagedata = DoorSensor().status()
-     webserver = 'localhost'
+     webserver = 'http://192.168.3.107:5000'
      url = webserver+"/doorSensor/status/"
      if messagedata == True:
      	print "Door Opened!"
