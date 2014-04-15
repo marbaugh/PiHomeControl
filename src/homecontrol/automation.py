@@ -193,7 +193,7 @@ class DoorSensor(Accessory):
 
         door = False
         for channel in self.channels:
-            timeout = time.time() + 5 #5 seconds from now
+            timeout = time.time() + 1 #5 seconds from now
             while time.time() < timeout:
                 if GPIO.input(channel):
                     door = True
