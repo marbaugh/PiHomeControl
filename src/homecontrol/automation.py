@@ -147,9 +147,12 @@ class MotionSensor(Accessory):
             while time.time() < timeout:
                 if GPIO.input(channel):
                     motion = True
-                
         return motion
 
+    def event_detect(self, motion_callback):
+        for channel in self.channels:
+            GPIO.add_event_detect(channel, GPIO.BOTH, callback=motion_callback)
+            
 class DoorSensor(Accessory):
     """DoorSensor class creates and instance of DoorSensor
 
@@ -194,5 +197,8 @@ class DoorSensor(Accessory):
             while time.time() < timeout:
                 if GPIO.input(channel):
                     door = True
-                
         return door
+        
+    def event_detect(self, door_callback):
+        for channel in self.channels:
+            GPIO.add_event_detect(channel, GPIO.BOTH, callback=door_callback)
