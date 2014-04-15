@@ -3,21 +3,14 @@
 from homecontrol.automation import DoorSensor
 import sys
 import time
-import zmq
+
+def DOOR():
+     print "Door Movement Detected!"
 
 def pub_door_sensor_status():
-    port = "5556"
-    topic = "door"
-    context = zmq.Context()
-    socket = context.socket(zmq.PUB)
-    socket.bind("tcp://*:{0}".format(port))
-    # Allow clients to connect before sending data
-    time.sleep(10)
-    while True:
-        messagedata = DoorSensor().status()
-        print "{0} {1}".format(topic, messagedata)
-        socket.send("{0} {1}".format(topic, messagedata))
-        time.sleep(15)
-
+    DoorSensor().event_detect(DOOR)
+    while 1:
+        time.sleep(100)
+    
 if __name__ == "__main__":
     pub_door_sensor_status()
