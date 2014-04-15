@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 
 from homecontrol.automation import DoorSensor
+import requests
 import sys
 import time
-import requests
 
 def DOOR(self):
-     print "Door Movement Detected!"
-     print DoorSensor().status()
+     messagedata = DoorSensor().status()
+     webserver = 'localhost'
      url = webserver+"/doorSensor/status/"
      if messagedata == True:
+     	print "Door Opened!"
      	r = requests.post(url+"opened")
      else:
+     	print "Door Closed!"
      	r = requests.post(url+"closed")
 
 
