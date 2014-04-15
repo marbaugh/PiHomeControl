@@ -4,7 +4,7 @@ from homecontrol.automation import DoorSensor
 import sys
 import time
 
-def DOOR():
+def DOOR(self):
      print "Door Movement Detected!"
 
 def pub_door_sensor_status():

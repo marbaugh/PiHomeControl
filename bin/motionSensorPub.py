@@ -5,7 +5,7 @@ import sys
 import time
 
 
-def MOTION():
+def MOTION(self):
      print "Motion Detected!"
 
 def pub_motion_sensor_status():

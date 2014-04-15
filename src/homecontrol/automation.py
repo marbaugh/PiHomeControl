@@ -151,7 +151,7 @@ class MotionSensor(Accessory):
 
     def event_detect(self, motion_callback):
         for channel in self.channels:
-            GPIO.add_event_detect(channel, GPIO.BOTH, callback=motion_callback)
+            GPIO.add_event_detect(channel, GPIO.RISING, callback=motion_callback)
             
 class DoorSensor(Accessory):
     """DoorSensor class creates and instance of DoorSensor
