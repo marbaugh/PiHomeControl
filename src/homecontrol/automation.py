@@ -201,4 +201,5 @@ class DoorSensor(Accessory):
         
     def event_detect(self, door_callback):
         for channel in self.channels:
-            GPIO.add_event_detect(channel, GPIO.BOTH, callback=door_callback)
+            GPIO.add_event_detect(channel, GPIO.RISING, callback=door_callback)
+            GPIO.add_event_detect(channel, GPIO.FALLING, callback=door_callback)
