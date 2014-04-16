@@ -5,22 +5,20 @@ import requests
 import sys
 import time
 
-def DOOR(self):
-     messagedata = DoorSensor().status()
+def door_openend(self):
      webserver = 'http://192.168.3.107:5000'
-     url = webserver+"/doorSensor/status/"
-     if messagedata == True:
-     	print "Door Opened!"
-     	r = requests.post(url+"opened")
-     else:
-     	print "Door Closed!"
-     	r = requests.post(url+"closed")
+     url = webserver+"/doorSensor/status/opened"
+	r = requests.post(url)
 
+def door_closed(self):
+     webserver = 'http://192.168.3.107:5000'
+     url = webserver+"/doorSensor/status/closed"
+	r = requests.post(url)
 
-def pub_door_sensor_status():
+def door_sensor_status():
     DoorSensor().event_detect(DOOR)
     while 1:
         time.sleep(100)
     
 if __name__ == "__main__":
-    pub_door_sensor_status()
+    door_sensor_status()
