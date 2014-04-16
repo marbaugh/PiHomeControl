@@ -16,7 +16,9 @@ def door_closed(self):
      r = requests.post(url)
 
 def door_sensor_status():
-    DoorSensor().event_detect(DOOR)
+    door = DoorSensor()
+    door.event_detect('opening', door_opened)
+    door.event_detect('closing', door_closed)
     while 1:
         time.sleep(100)
     
