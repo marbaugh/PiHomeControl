@@ -8,10 +8,10 @@ import time
 def MOTION(self):
      print "Motion Detected!"
 
-def pub_motion_sensor_status():
+def motion_sensor_status():
      MotionSensor().event_detect(MOTION)
      while 1:
           time.sleep(100)
 
 if __name__ == "__main__":
-     pub_motion_sensor_status()
+     motion_sensor_status()
