@@ -8,12 +8,12 @@ import time
 def door_openend(self):
      webserver = 'http://192.168.3.107:5000'
      url = webserver+"/doorSensor/status/opened"
-	r = requests.post(url)
+     r = requests.post(url)
 
 def door_closed(self):
      webserver = 'http://192.168.3.107:5000'
      url = webserver+"/doorSensor/status/closed"
-	r = requests.post(url)
+     r = requests.post(url)
 
 def door_sensor_status():
     DoorSensor().event_detect(DOOR)
