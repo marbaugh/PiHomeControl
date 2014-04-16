@@ -199,7 +199,9 @@ class DoorSensor(Accessory):
                     door = True
         return door
         
-    def event_detect(self, door_callback):
+    def event_detect(self, status, door_callback):
         for channel in self.channels:
-            GPIO.add_event_detect(channel, GPIO.RISING, callback=door_callback)
-            GPIO.add_event_detect(channel, GPIO.FALLING, callback=door_callback)
+            if status == 'openiing':
+                GPIO.add_event_detect(channel, GPIO.FALLING, callback=door_callback)
+            elif status == 'closing':
+                GPIO.add_event_detect(channel, GPIO.FALLING, callback=door_callback)
