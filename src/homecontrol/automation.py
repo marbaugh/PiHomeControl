@@ -143,7 +143,7 @@ class MotionSensor(Accessory):
 
         motion = False
         for channel in self.channels:
-            timeout = time.time() + 5 #5 seconds from now
+            timeout = time.time() + 1
             while time.time() < timeout:
                 if GPIO.input(channel):
                     motion = True
@@ -193,15 +193,12 @@ class DoorSensor(Accessory):
 
         door = False
         for channel in self.channels:
-            timeout = time.time() + 1 #5 seconds from now
+            timeout = time.time() + .5 #.5 seconds from now
             while time.time() < timeout:
                 if GPIO.input(channel):
                     door = True
         return door
         
-    def event_detect(self, status, door_callback):
+    def event_detect(self, door_callback):
         for channel in self.channels:
-            if status == 'openiing':
-                GPIO.add_event_detect(channel, GPIO.FALLING, callback=door_callback)
-            elif status == 'closing':
-                GPIO.add_event_detect(channel, GPIO.RISING, callback=door_callback)
+            GPIO.add_event_detect(channel, GPIO.BOTH, callback=door_callback)
