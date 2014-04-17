@@ -2,14 +2,21 @@
 
 from homecontrol.automation import MotionSensor
 import sys
+import requests
 import time
 
+motionSensor = MotionSensor()
 
-def MOTION(self):
-     print "Motion Detected!"
+def motion_event(self):
+     messagedata = motionSensor.status()
+     webserver = 'http://192.168.3.107:5000'
+     url = webserver+"/motionSensor/status/"
+     if messagedata == True:
+        print "Motion Sensed!"
+        r = requests.post(url+"motion")
 
 def motion_sensor_status():
-     MotionSensor().event_detect(MOTION)
+     motionSensor.event_detect(motion_event)
      while 1:
           time.sleep(100)
 
