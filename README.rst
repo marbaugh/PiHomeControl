@@ -11,6 +11,15 @@ To install latest::
 
     pip install git+git://github.com/marbaugh/PiHomeControl.git
 
+Config
+-----
+
+Once installed you can configure a few options::
+
+    Nose test can be run for the sensors to make sure they are working using the tests directory
+
+    For the init scripts inside the init directory can work, links must be made in /usr/local/bin to the scripts in the bin directory.
+
 
 Usage
 -----
